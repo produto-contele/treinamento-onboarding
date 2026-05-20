@@ -14,11 +14,11 @@
             --blue-secondary: #0F172A; /* Slate 900 */
             --blue-light: #EFF6FF;
             
-            /* Cores do Roadmap - FASE 1 ALTERADA PARA VERDE */
+            /* Cores do Roadmap */
             --sem1-color: #10B981; /* Verde */
             --sem1-bg: #ECFDF5;
             --sem2-color: #F59E0B; /* Amarelo/Laranja */
-            --sem2-color-bg: #FFFBEB;
+            --sem2-bg: #FFFBEB;
             --sem3-color: #3B82F6; /* Azul Claro/Médio */
             --sem3-bg: #EFF6FF;
             --sem4-color: #EF4444; /* Vermelho */
@@ -98,22 +98,42 @@
         .t-title { font-size: 16px; font-weight: 600; color: var(--blue-secondary); }
 
         /* Layout Detail */
-        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; flex: 1; margin-bottom: 60px; height: calc(100% - 130px); }
+        /* Otimizado o margin-bottom de 60px para 40px para garantir que caiba em telas normais */
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; flex: 1; margin-bottom: 40px; height: calc(100% - 110px); }
         .detail-card { background: white; border-radius: 20px; border: 1px solid var(--card-border); box-shadow: 0 10px 30px -5px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 20px; }
         
-        .detail-card-updated { padding: 40px; gap: 20px; overflow-y: auto; }
+        .detail-card-updated { padding: 30px; gap: 15px; overflow-y: auto; }
         .detail-card-updated::-webkit-scrollbar { width: 6px; }
         .detail-card-updated::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
         
-        .detail-card-updated h3 { font-size: 28px; letter-spacing: -1px; margin-bottom: 10px; }
-        .detail-card-updated p { font-size: 16px; line-height: 1.6; color: var(--text-gray); }
+        .detail-card-updated h3 { font-size: 26px; letter-spacing: -1px; margin-bottom: 5px; }
+        .detail-card-updated p { font-size: 15px; line-height: 1.5; color: var(--text-gray); }
         
         .feature-cards-list { list-style: none; display: flex; flex-direction: column; gap: 15px; margin-top: 10px; }
         .feature-cards-list li { background: #ffffff; border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; display: flex; align-items: flex-start; gap: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); transition: transform 0.2s ease; }
         .feature-cards-list li:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+
+        /* ----- NOVO GRID OTIMIZADO PARA A FASE 2 (Evitar Scroll) ----- */
+        .grid-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 5px; }
+        .grid-list li { padding: 15px; gap: 15px; margin-top: 0; }
+        .grid-list .full-width { grid-column: 1 / -1; }
+        .grid-list .feature-icon-wrapper { width: 40px; height: 40px; font-size: 18px; }
+        .grid-list li strong { font-size: 15px; }
+        .grid-list li span { font-size: 13px; line-height: 1.3; }
+        .grid-list .btn-link { font-size: 12px; padding: 6px 12px; margin-top: 6px; }
+        
+        /* Nova caixa de Login Horizontal (Para a Fase 2) */
+        .login-box-horizontal { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; justify-content: space-between; background: var(--bg-page); padding: 10px 16px; border-radius: 8px; font-size: 13px; border: 1px solid var(--card-border); margin-top: 8px; width: 100%;}
+        .login-box-horizontal div { margin-bottom: 0; color: var(--blue-secondary); }
+        .login-box-horizontal a { color: var(--blue-primary); font-weight: 600; text-decoration: none; }
+        
+        /* Ambiente de Teste Padrão (Box de Login Vertical para Fase 3 se necessário) */
+        .login-box { background: var(--bg-page); padding: 12px 16px; border-radius: 8px; font-size: 14px; border: 1px solid var(--card-border); width: 100%; margin-top: 5px;}
+        .login-box div { margin-bottom: 4px; color: var(--blue-secondary); }
+        .login-box a { color: var(--blue-primary); font-weight: 600; text-decoration: none; }
         
         .feature-icon-wrapper { font-size: 24px; width: 50px; height: 50px; border-radius: 12px; background: var(--bg-page); display: flex; align-items: center; justify-content: center; color: var(--blue-primary); flex-shrink: 0;}
-        .feature-text-wrapper { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+        .feature-text-wrapper { display: flex; flex-direction: column; gap: 4px; width: 100%; }
         .feature-cards-list li strong { font-size: 17px; color: var(--blue-secondary); font-weight: 700; }
         .feature-cards-list li span { font-size: 14px; color: var(--text-gray); font-weight: 400; line-height: 1.4; }
 
@@ -140,7 +160,7 @@
         .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; flex: 1; }
         .video-card { background: var(--bg-page); padding: 20px; border-radius: 12px; border: 1px solid var(--card-border); display: flex; flex-direction: column; gap: 15px; }
         .video-card h4 { font-size: 18px; color: var(--blue-secondary); text-align: center; margin: 0;}
-        .video-iframe-container { width: 100%; flex: 1; border-radius: 10px; overflow: hidden; background: #000; min-height: 0; /* Ajuda o iframe a usar o flex: 1 corretamente */ position: relative;}
+        .video-iframe-container { width: 100%; flex: 1; border-radius: 10px; overflow: hidden; background: #000; min-height: 0; position: relative;}
         .video-iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         .video-footer { display: flex; flex-direction: column; gap: 10px; text-align: center; flex-shrink: 0;}
 
@@ -149,11 +169,6 @@
         .control-btn { background-color: white; color: var(--text-dark); border: 1px solid var(--card-border); padding: 12px 24px; border-radius: 50px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .control-btn:hover:not(:disabled) { background-color: var(--blue-primary); color: white; border-color: var(--blue-primary); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2); }
         .control-btn:disabled { background-color: var(--neutral-bg); border-color: var(--card-border); color: #94A3B8; cursor: not-allowed; box-shadow: none; transform: none; }
-        
-        /* Ambiente de Teste (Box de Login) */
-        .login-box { background: var(--bg-page); padding: 12px 16px; border-radius: 8px; font-size: 14px; border: 1px solid var(--card-border); width: 100%; margin-top: 5px;}
-        .login-box div { margin-bottom: 4px; color: var(--blue-secondary); }
-        .login-box a { color: var(--blue-primary); font-weight: 600; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -163,12 +178,12 @@
         <div class="slide slide-cover active" id="slide-0">
             <img src="https://i.ibb.co/YFRS0XGF/oie-transparent.png" alt="Contele Teams Logo" class="logo-cover">
             <h1>Treinamento de Novos Consultores</h1>
-            <p style="font-size: 24px; color: var(--text-gray); font-weight: 500;">Onboarding de Vendedores e Customer Success</p>
+            <p style="font-size: 24px; color: var(--text-gray); font-weight: 500;">Onboarding de Vendas e Customer Success</p>
         </div>
 
         <div class="slide" id="slide-1">
             <img src="https://i.ibb.co/YFRS0XGF/oie-transparent.png" alt="Contele" class="logo-mini">
-            <h2 style="margin-bottom: 5px;">🗺️ Cronologia de Treinamento</h2>
+            <h2 style="margin-bottom: 5px;"><i class="fa-solid fa-hourglass-half" style="color: var(--blue-primary); margin-right: 12px;"></i> Cronologia de Treinamento</h2>
             <p style="color: var(--text-gray); margin-bottom: 10px; font-size: 18px;">Acompanhe passo a passo a sequência de aprendizado esperada para a sua evolução.</p>
             
             <div class="timeline-container">
@@ -205,32 +220,32 @@
 
                 <div class="timeline-col">
                     <div class="t-item">
-                        <span class="t-title">8. Treinamento Avançado</span>
+                        <span class="t-title">8. Acesso ao Ambiente de Testes</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Imediato</span>
+                    </div>
+                    <div class="t-item">
+                        <span class="t-title">9. Treinamento Avançado</span>
                         <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 6º dia</span>
                     </div>
                     <div class="t-item">
-                        <span class="t-title">9. Ilustração Avaliação 1 & Feedback</span>
+                        <span class="t-title">10. Avaliação 1 & Feedback</span>
                         <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 7º dia</span>
                     </div>
                     <div class="t-item">
-                        <span class="t-title">10. Apresentação para CS 1</span>
-                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 8º dia</span>
-                    </div>
-                    <div class="t-item">
-                        <span class="t-title">11. Apresentação para CS 2</span>
-                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 9º dia</span>
+                        <span class="t-title">11. Apresentação para CS 1 e 2</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Dias 8 e 9</span>
                     </div>
                     <div class="t-item">
                         <span class="t-title">12. 03 Reuniões Práticas & LinkTree</span>
                         <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 10º dia</span>
                     </div>
-                    <div class="t-item">
-                        <span class="t-title">13. AVALIAÇÃO 1</span>
-                        <span class="badge-done" style="background:#EF4444;"><i class="fa-solid fa-flag-checkered"></i> Até 12º dia</span>
+                    <div class="t-item" style="border-left-color: var(--sem3-color);">
+                        <span class="t-title">13. Oráculo Teams (Suporte IA)</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Prática</span>
                     </div>
                     <div class="t-item">
-                        <span class="t-title">14. AVALIAÇÃO 2 (Se necessário)</span>
-                        <span class="badge-done" style="background:#EF4444;"><i class="fa-solid fa-flag-checkered"></i> Até 15º dia</span>
+                        <span class="t-title">14. AVALIAÇÕES FINAIS (1 e 2)</span>
+                        <span class="badge-done" style="background:#EF4444;"><i class="fa-solid fa-flag-checkered"></i> 12º/15º dia</span>
                     </div>
                 </div>
             </div>
@@ -279,22 +294,46 @@
             </div>
         </div>
 
-        <div class="slide" id="slide-3">
+        <div class="slide slide-no-scroll" id="slide-3">
             <img src="https://i.ibb.co/YFRS0XGF/oie-transparent.png" alt="Contele" class="logo-mini">
             <h2>⚙️ Fase 2: Domínio do Produto</h2>
-            <div class="detail-grid">
-                <div class="detail-card detail-card-updated" style="border-left: 6px solid var(--sem2-color);">
-                    <h3 style="color: var(--sem2-color);">Ecossistema e Mercado</h3>
-                    <p>Entre o 5º e 6º dia, o foco é mergulhar profundamente no produto, nas suas integrações e entender as objeções comuns.</p>
-                    <ul class="feature-cards-list">
-                        <li>
+            <div class="detail-grid" style="grid-template-columns: 1.3fr 0.7fr;"> <div class="detail-card detail-card-updated" style="border-left: 6px solid var(--sem2-color);">
+                    <h3 style="color: var(--sem2-color);">Ecossistema e Prática de Produto</h3>
+                    <p style="margin-bottom: -5px;">Mergulho profundo no produto, nas integrações e acesso ao ambiente prático de testes.</p>
+                    
+                    <ul class="feature-cards-list grid-list">
+                        <li class="full-width">
                             <div class="feature-icon-wrapper" style="color: var(--sem2-color);">
-                                <i class="fa-solid fa-puzzle-piece"></i>
+                                <i class="fa-solid fa-key"></i>
                             </div>
                             <div class="feature-text-wrapper">
-                                <strong>Produto e Integrações (Até 5º Dia)</strong>
-                                <span>Treinamento profundo de Produto, API e Automações.</span>
-                                <a href="https://drive.google.com/file/d/1qrqI0_lEJ6iRqeNjWue-g55yeDMg_g_h/view" target="_blank" class="btn-link"><i class="fa-solid fa-video"></i> Assistir Treinamento</a>
+                                <strong>Ambiente de Testes (Contele Teams)</strong>
+                                <span>Utilize para praticar enquanto estuda o produto:</span>
+                                <div class="login-box-horizontal">
+                                    <div><strong>Acesso:</strong> <a href="https://app.contelege.com.br/" target="_blank">app.contelege.com.br</a></div>
+                                    <div><strong>Login:</strong> treinamento.produto@contele.com.br</div>
+                                    <div><strong>Senha:</strong> @Produto.Testes</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-icon-wrapper" style="color: var(--sem2-color);">
+                                <i class="fa-solid fa-video"></i>
+                            </div>
+                            <div class="feature-text-wrapper">
+                                <strong>Treinamento Produto</strong>
+                                <span>Diretrizes do sistema.</span>
+                                <a href="https://drive.google.com/file/d/1qrqI0_lEJ6iRqeNjWue-g55yeDMg_g_h/view" target="_blank" class="btn-link"><i class="fa-solid fa-video"></i> Assistir</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-icon-wrapper" style="color: var(--sem2-color);">
+                                <i class="fa-solid fa-plug"></i>
+                            </div>
+                            <div class="feature-text-wrapper">
+                                <strong>API e Integrações</strong>
+                                <span>Automações externas.</span>
+                                <a href="https://drive.google.com/file/d/1RQu_xfK_T_0rrvrSyEQB-tDLXBxgHJdt/view?usp=sharing" target="_blank" class="btn-link"><i class="fa-solid fa-video"></i> Assistir</a>
                             </div>
                         </li>
                         <li>
@@ -302,21 +341,9 @@
                                 <i class="fa-solid fa-comments-dollar"></i>
                             </div>
                             <div class="feature-text-wrapper">
-                                <strong>Concorrência e Objeções (Até 5º Dia)</strong>
-                                <span>Vídeo base de conhecimento sobre a nossa concorrência.</span>
-                                <div style="display:flex; gap:10px; flex-wrap: wrap;">
-                                    <a href="https://drive.google.com/file/d/1sC49IwaFHmdm66i6ZOt4OExx5KWZH7ug/view" target="_blank" class="btn-link"><i class="fa-solid fa-video"></i> Assistir Treinamento</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="feature-icon-wrapper" style="color: var(--sem2-color);">
-                                <i class="fa-solid fa-robot"></i>
-                            </div>
-                            <div class="feature-text-wrapper">
-                                <strong>Oráculo Teams</strong>
-                                <span>Consulte e prepare-se para contornar desafios comerciais utilizando a IA.</span>
-                                <a href="https://notebooklm.google.com/notebook/d37fc696-f3ce-4661-995f-d5cb607082c2" target="_blank" class="btn-link btn-link-alt"><i class="fa-solid fa-robot"></i> Acessar Oráculo Teams</a>
+                                <strong>Objeções</strong>
+                                <span>Mapeamento comercial.</span>
+                                <a href="https://drive.google.com/file/d/1sC49IwaFHmdm66i6ZOt4OExx5KWZH7ug/view" target="_blank" class="btn-link"><i class="fa-solid fa-video"></i> Assistir</a>
                             </div>
                         </li>
                         <li>
@@ -324,9 +351,9 @@
                                 <i class="fa-solid fa-graduation-cap"></i>
                             </div>
                             <div class="feature-text-wrapper">
-                                <strong>Treinamento Avançado (Até 6º Dia)</strong>
-                                <span>Técnicas avançadas de uso e gestão no Contele Teams.</span>
-                                <a href="https://produto-contele.github.io/treinamento-avancado/" target="_blank" class="btn-link"><i class="fa-solid fa-rocket"></i> Acessar Módulo Avançado</a>
+                                <strong>Avançado</strong>
+                                <span>Técnicas Expert.</span>
+                                <a href="https://produto-contele.github.io/treinamento-avancado/" target="_blank" class="btn-link"><i class="fa-solid fa-rocket"></i> Acessar Módulo</a>
                             </div>
                         </li>
                     </ul>
@@ -344,20 +371,16 @@
             <div class="detail-grid">
                 <div class="detail-card detail-card-updated" style="border-left: 6px solid var(--sem3-color);">
                     <h3 style="color: var(--sem3-color);">Experiência do Cliente</h3>
-                    <p>Do 7º ao 10º dia, participe ativamente de simulações e obtenha acesso oficial às ferramentas de teste.</p>
+                    <p>Vivência real em reuniões com o auxílio do Oráculo para sanar dúvidas complexas de mercado.</p>
                     <ul class="feature-cards-list">
                         <li>
                             <div class="feature-icon-wrapper" style="color: var(--sem3-color);">
-                                <i class="fa-solid fa-key"></i>
+                                <i class="fa-solid fa-robot"></i>
                             </div>
                             <div class="feature-text-wrapper">
-                                <strong>Ambiente de Testes (Contele Teams)</strong>
-                                <span>Credenciais para acesso à conta de treinamento:</span>
-                                <div class="login-box">
-                                    <div><strong>Acesso:</strong> <a href="https://app.contelege.com.br/" target="_blank">app.contelege.com.br</a></div>
-                                    <div><strong>Login:</strong> treinamento.produto@contele.com.br</div>
-                                    <div><strong>Senha:</strong> @Produto.Testes</div>
-                                </div>
+                                <strong>Oráculo Teams (Suporte IA)</strong>
+                                <span>Sua inteligência artificial de consulta rápida para dúvidas técnicas durante a prática.</span>
+                                <a href="https://notebooklm.google.com/notebook/d37fc696-f3ce-4661-995f-d5cb607082c2" target="_blank" class="btn-link btn-link-alt"><i class="fa-solid fa-robot"></i> Acessar Oráculo</a>
                             </div>
                         </li>
                         <li>
@@ -365,8 +388,8 @@
                                 <i class="fa-solid fa-people-group"></i>
                             </div>
                             <div class="feature-text-wrapper">
-                                <strong>Prática em Reuniões (Até 10º Dia)</strong>
-                                <span>Participação em no mínimo 3 reuniões acompanhadas. <em>(Enviar links probatórios para a liderança)</em></span>
+                                <strong>Prática em Reuniões (Mínimo 3)</strong>
+                                <span>Observe apresentações reais e anote as principais abordagens de CS e Vendas.</span>
                             </div>
                         </li>
                         <li>
@@ -374,8 +397,7 @@
                                 <i class="fa-solid fa-link"></i>
                             </div>
                             <div class="feature-text-wrapper">
-                                <strong>Apresentação do LinkTree (Até 10º Dia)</strong>
-                                <span>Central de links e acessos rápidos para a operação.</span>
+                                <strong>Apresentação do LinkTree</strong>
                                 <a href="https://produto-contele.github.io/linktree/" target="_blank" class="btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Acessar LinkTree</a>
                             </div>
                         </li>
@@ -440,12 +462,12 @@
         <div class="sidebar-title">Menu de Onboarding</div>
         <ul class="index-list">
             <li class="index-item active-nav" onclick="goToSlide(0)"><i class="fa-solid fa-house"></i> Início</li>
-            <li class="index-item" onclick="goToSlide(1)"><i class="fa-solid fa-list-check"></i> Cronologia</li>
+            <li class="index-item" onclick="goToSlide(1)"><i class="fa-solid fa-hourglass-half"></i> Cronologia</li>
             
             <div class="index-group">Etapas do Treinamento</div>
             <li class="index-item sub-item" onclick="goToSlide(2)"><i class="fa-solid fa-desktop" style="color:#10B981"></i> Fase 1: Web & App</li>
             <li class="index-item sub-item" onclick="goToSlide(3)"><i class="fa-solid fa-brain" style="color:#F59E0B"></i> Fase 2: Produto</li>
-            <li class="index-item sub-item" onclick="goToSlide(4)"><i class="fa-solid fa-user-tie" style="color:#3B82F6"></i> Fase 3: Prática CS</li>
+            <li class="index-item sub-item" onclick="goToSlide(4)"><i class="fa-solid fa-user-tie" style="color:#3B82F6"></i> Fase 3: Prática</li>
             <li class="index-item sub-item" onclick="goToSlide(5)"><i class="fa-solid fa-clipboard-check" style="color:#EF4444"></i> Fase 4: Avaliações</li>
         </ul>
     </div>
