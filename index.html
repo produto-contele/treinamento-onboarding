@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinamento de Novos Consultores - Contele Teams</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Paleta Moderna */
+            --blue-primary: #2563EB;
+            --blue-primary-hover: #1D4ED8;
+            --blue-secondary: #0F172A; /* Slate 900 */
+            --blue-light: #EFF6FF;
+            
+            /* Cores do Roadmap - FASE 1 ALTERADA PARA VERDE */
+            --sem1-color: #10B981; /* Verde */
+            --sem1-bg: #ECFDF5;
+            --sem2-color: #F59E0B; /* Amarelo/Laranja */
+            --sem2-color-bg: #FFFBEB;
+            --sem3-color: #3B82F6; /* Azul Claro/Médio */
+            --sem3-bg: #EFF6FF;
+            --sem4-color: #EF4444; /* Vermelho */
+            --sem4-bg: #FEF2F2;
+            
+            --text-dark: #1E293B;
+            --text-gray: #64748B;
+            --bg-page: #F8FAFC;
+            --card-border: #E2E8F0;
+            --sidebar-width: 280px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-dark);
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+        }
+
+        /* Sidebar Moderna */
+        #sidebar {
+            width: var(--sidebar-width); height: 100%;
+            background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
+            color: white;
+            padding: 24px 16px; display: flex; flex-direction: column;
+            box-shadow: -4px 0 25px rgba(0,0,0,0.15); z-index: 1000;
+        }
+        .sidebar-title { font-size: 16px; font-weight: 800; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; letter-spacing: 0.5px; text-transform: uppercase; color: #E2E8F0; }
+        .index-list { list-style: none; overflow-y: auto; flex: 1; padding-right: 5px; }
+        .index-list::-webkit-scrollbar { width: 4px; }
+        .index-list::-webkit-scrollbar-track { background: transparent; }
+        .index-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        .index-group { font-size: 11px; font-weight: 700; color: #94A3B8; margin-top: 20px; margin-bottom: 8px; padding-left: 12px; text-transform: uppercase; letter-spacing: 1.5px; }
+        .index-item { padding: 10px 14px; margin-bottom: 4px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.2s ease; color: #CBD5E1; display: flex; align-items: center; gap: 10px; }
+        .index-item i { font-size: 14px; opacity: 0.8; }
+        .index-item:hover { background-color: rgba(255,255,255,0.08); color: white; transform: translateX(4px); }
+        .index-item.active-nav { background-color: var(--blue-primary); color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); font-weight: 600; }
+        .sub-item { padding-left: 30px; font-size: 12.5px; }
+
+        /* Área Principal de Slides */
+        #presentation-container { width: calc(100% - var(--sidebar-width)); height: 100%; position: relative; background-image: radial-gradient(#E2E8F0 1px, transparent 1px); background-size: 24px 24px; }
+        .slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            padding: 40px 60px; opacity: 0; visibility: hidden;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s;
+            display: flex; flex-direction: column; background: rgba(248, 250, 252, 0.95);
+            backdrop-filter: blur(8px);
+            overflow-y: auto;
+        }
+        .slide.active { opacity: 1; visibility: visible; }
+        .slide-no-scroll { overflow: hidden !important; }
+
+        /* Tipografia e Logos */
+        .logo-mini { position: absolute; top: 30px; right: 60px; width: 130px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05)); z-index: 10;}
+        h1 { color: var(--blue-secondary); font-size: 56px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 20px; }
+        h2 { color: var(--blue-secondary); font-size: 34px; font-weight: 800; letter-spacing: -1px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0;}
+        h2::before { content: ''; display: block; width: 8px; height: 36px; background: var(--blue-primary); border-radius: 4px; }
+        .slide-cover { justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #ffffff 0%, #E0E7FF 100%); }
+        .slide-cover h2::before { display: none; }
+        .logo-cover { width: 380px; margin-bottom: 40px; filter: drop-shadow(0 10px 25px rgba(0,0,0,0.1)); }
+
+        /* Componentes de Badges */
+        .badge-done { background-color: #10B981; color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 5px rgba(16, 185, 129, 0.2); }
+        .badge-blue { background-color: var(--blue-primary); color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2); }
+
+        /* ----- LINHA DO TEMPO ESPAÇOSA ----- */
+        .timeline-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 60px; margin-top: 15px; flex: 1; align-content: center; padding-bottom: 40px;}
+        .timeline-col { position: relative; padding-left: 25px; border-left: 4px solid var(--blue-primary); display: flex; flex-direction: column; gap: 18px; justify-content: space-between;}
+        .t-item { background: white; border: 1px solid var(--card-border); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: transform 0.2s;}
+        .t-item:hover { transform: translateX(8px); border-color: var(--blue-primary); }
+        .t-item::before { content: ''; position: absolute; left: -35px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; border-radius: 50%; background: white; border: 4px solid var(--blue-primary); z-index: 2; }
+        .t-title { font-size: 16px; font-weight: 600; color: var(--blue-secondary); }
+
+        /* Layout Detail */
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; flex: 1; margin-bottom: 60px; height: calc(100% - 130px); }
+        .detail-card { background: white; border-radius: 20px; border: 1px solid var(--card-border); box-shadow: 0 10px 30px -5px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 20px; }
+        
+        .detail-card-updated { padding: 40px; gap: 20px; overflow-y: auto; }
+        .detail-card-updated::-webkit-scrollbar { width: 6px; }
+        .detail-card-updated::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+        
+        .detail-card-updated h3 { font-size: 28px; letter-spacing: -1px; margin-bottom: 10px; }
+        .detail-card-updated p { font-size: 16px; line-height: 1.6; color: var(--text-gray); }
+        
+        .feature-cards-list { list-style: none; display: flex; flex-direction: column; gap: 15px; margin-top: 10px; }
+        .feature-cards-list li { background: #ffffff; border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; display: flex; align-items: flex-start; gap: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); transition: transform 0.2s ease; }
+        .feature-cards-list li:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        
+        .feature-icon-wrapper { font-size: 24px; width: 50px; height: 50px; border-radius: 12px; background: var(--bg-page); display: flex; align-items: center; justify-content: center; color: var(--blue-primary); flex-shrink: 0;}
+        .feature-text-wrapper { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+        .feature-cards-list li strong { font-size: 17px; color: var(--blue-secondary); font-weight: 700; }
+        .feature-cards-list li span { font-size: 14px; color: var(--text-gray); font-weight: 400; line-height: 1.4; }
+
+        /* Botões de Link Customizados */
+        .btn-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background-color: var(--blue-primary); color: white; text-decoration: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; margin-top: 8px; transition: background 0.2s; align-self: flex-start; }
+        .btn-link:hover { background-color: var(--blue-primary-hover); color: white; }
+        .btn-link-alt { background-color: var(--bg-page); color: var(--blue-secondary); border: 1px solid var(--card-border); }
+        .btn-link-alt:hover { background-color: #E2E8F0; color: var(--blue-secondary); }
+        .btn-feedback { background-color: #F59E0B; color: white; border: none; margin-top:0; width: 100%; padding: 12px;}
+        .btn-feedback:hover { background-color: #D97706; color: white; }
+
+        /* Coluna da Direita (Ícone Visual) */
+        .detail-visual-col { display: flex; align-items: center; justify-content: center; background: white; border-radius: 20px; border: 1px dashed var(--card-border); flex-direction: column; padding: 40px; text-align: center; }
+        .detail-visual-col i { font-size: 120px; margin-bottom: 30px; }
+        .detail-visual-col h3 { font-size: 28px; font-weight: 800; color: var(--blue-secondary); }
+
+        /* Grid de Vídeos Otimizados para Tela Cheia */
+        .eval-container { background: white; border-radius: 16px; padding: 25px; border: 1px solid var(--card-border); border-top: 6px solid var(--sem4-color); box-shadow: 0 10px 30px -5px rgba(0,0,0,0.03); margin-top: 10px; display: flex; flex-direction: column; gap: 20px; flex: 1; margin-bottom: 80px;}
+        .eval-header { display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;}
+        .eval-header h3 { color: var(--sem4-color); font-size: 24px; margin-bottom: 5px; }
+        .eval-header p { color: var(--text-gray); font-size: 15px; }
+        .eval-alert { background: #FEF2F2; color: #EF4444; padding: 10px 16px; border-radius: 10px; font-weight: 700; font-size: 14px; border: 1px dashed #FCA5A5; display: flex; align-items: center; gap: 8px;}
+        
+        .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; flex: 1; }
+        .video-card { background: var(--bg-page); padding: 20px; border-radius: 12px; border: 1px solid var(--card-border); display: flex; flex-direction: column; gap: 15px; }
+        .video-card h4 { font-size: 18px; color: var(--blue-secondary); text-align: center; margin: 0;}
+        .video-iframe-container { width: 100%; flex: 1; border-radius: 10px; overflow: hidden; background: #000; min-height: 0; /* Ajuda o iframe a usar o flex: 1 corretamente */ position: relative;}
+        .video-iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .video-footer { display: flex; flex-direction: column; gap: 10px; text-align: center; flex-shrink: 0;}
+
+        /* Controles Inferiores */
+        .controls { position: absolute; bottom: 30px; right: 60px; display: flex; gap: 15px; z-index: 100; }
+        .control-btn { background-color: white; color: var(--text-dark); border: 1px solid var(--card-border); padding: 12px 24px; border-radius: 50px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .control-btn:hover:not(:disabled) { background-color: var(--blue-primary); color: white; border-color: var(--blue-primary); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2); }
+        .control-btn:disabled { background-color: var(--neutral-bg); border-color: var(--card-border); color: #94A3B8; cursor: not-allowed; box-shadow: none; transform: none; }
+        
+        /* Ambiente de Teste (Box de Login) */
+        .login-box { background: var(--bg-page); padding: 12px 16px; border-radius: 8px; font-size: 14px; border: 1px solid var(--card-border); width: 100%; margin-top: 5px;}
+        .login-box div { margin-bottom: 4px; color: var(--blue-secondary); }
+        .login-box a { color: var(--blue-primary); font-weight: 600; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div id="presentation-container">
+
+        <div class="slide slide-cover active" id="slide-0">
+            <img src="https://i.ibb.co/YFRS0XGF/oie-transparent.png" alt="Contele Teams Logo" class="logo-cover">
+            <h1>Treinamento de Novos Consultores</h1>
+            <p style="font-size: 24px; color: var(--text-gray); font-weight: 500;">Onboarding de Vendedores e Customer Success</p>
+        </div>
+
+        <div class="slide" id="slide-1">
+            <img src="https://i.ibb.co/YFRS0XGF/oie-transparent.png" alt="Contele" class="logo-mini">
+            <h2 style="margin-bottom: 5px;">🗺️ Cronologia de Treinamento</h2>
+            <p style="color: var(--text-gray); margin-bottom: 10px; font-size: 18px;">Acompanhe passo a passo a sequência de aprendizado esperada para a sua evolução.</p>
+            
+            <div class="timeline-container">
+                <div class="timeline-col">
+                    <div class="t-item">
+                        <span class="t-title">1. Treinamento completo da Web</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 2º dia</span>
+                    </div>
+                    <div class="t-item">
+                        <span class="t-title">2. Questionário da Web</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 2º dia</span>
+                    </div>
+                    <div class="t-item">
+                        <span class="t-title">3. Treinamento completo do App</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 4º dia</span>
+                    </div>
+                    <div class="t-item">
+                        <span class="t-title">4. Questionário do App</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 4º dia</span>
+                    </div>
+                    <div class="t-item">
+                        <span class="t-title">5. Treinamento Produto (Teams)</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 5º dia</span>
+                    </div>
+                    <div class="t-item">
+                        <span class="t-title">6. API, Integrações e Automações</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 5º dia</span>
+                    </div>
+                    <div class="t-item">
+                        <span class="t-title">7. Concorrência e Objeções</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 5º dia</span>
+                    </div>
+                </div>
+
+                <div class="timeline-col">
+                    <div class="t-item">
+                        <span class="t-title">8. Treinamento Avançado</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 6º dia</span>
+                    </div>
+                    <div class="t-item">
+                        <span class="t-title">9. Ilustração Avaliação 1 & Feedback</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 7º dia</span>
+                    </div>
+                    <div class="t-item">
+                        <span class="t-title">10. Apresentação para CS 1</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 8º dia</span>
+                    </div>
+                    <div class="t-item">
+                        <span class="t-title">11. Apresentação para CS 2</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 9º dia</span>
+                    </div>
+                    <div class="t-item">
+                        <span class="t-title">12. 03 Reuniões Práticas & LinkTree</span>
+                        <span class="badge-blue"><i class="fa-regular fa-clock"></i> Até 10º dia</span>
+                    </div>
+                    <div class="t-item">
+                        <span class="t-title">13. AVALIAÇÃO 1</span>
+                        <span class="badge-done" style="background:#EF4444;"><i class="fa-solid fa-flag-checkered"></i> Até 12º dia</span>
+                    </div>
+                    <div class="t-item">
+                        <span class="t-title">14. AVALIAÇÃO 2 (Se necessário)</span>
+                        <span class="badge-done" style="background:#EF4444;"><i class="fa-solid fa-flag-checkered"></i> Até 15º dia</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-2">
+            <img src="https://i.ibb.co/YFRS0XGF/oie-transparent.png" alt="Contele" class="logo-mini">
+            <h2>🚀 Fase 1: Fundamentos (Web & App)</h2>
+            <div class="detail-grid">
+                <div class="detail-card detail-card-updated" style="border-left: 6px solid var(--sem1-color);">
+                    <h3 style="color: var(--sem1-color);">Plataforma Web e Aplicativo</h3>
+                    <p>O início da sua jornada. Os primeiros quatro dias são focados em dominar completamente a nossa plataforma em todos os seus ambientes operacionais.</p>
+                    <ul class="feature-cards-list">
+                        <li>
+                            <div class="feature-icon-wrapper" style="color: var(--sem1-color); background: var(--sem1-bg);">
+                                <i class="fa-solid fa-desktop"></i>
+                            </div>
+                            <div class="feature-text-wrapper">
+                                <strong>Treinamento Web (Até 2º Dia)</strong>
+                                <span>Aprenda todas as funcionalidades do painel de gestão.</span>
+                                <div style="display:flex; gap:10px; flex-wrap: wrap;">
+                                    <a href="https://produto-contele.github.io/treinamento-web/" target="_blank" class="btn-link"><i class="fa-solid fa-book"></i> Treinamento Web</a>
+                                    <a href="https://produto-contele.github.io/questionario-web/" target="_blank" class="btn-link btn-link-alt"><i class="fa-solid fa-pen-to-square"></i> Questionário</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-icon-wrapper" style="color: var(--sem1-color); background: var(--sem1-bg);">
+                                <i class="fa-solid fa-mobile-screen"></i>
+                            </div>
+                            <div class="feature-text-wrapper">
+                                <strong>Treinamento App (Até 4º Dia)</strong>
+                                <span>Domine a ferramenta utilizada pelos colaboradores em campo.</span>
+                                <div style="display:flex; gap:10px; flex-wrap: wrap;">
+                                    <a href="https://produto-contele.github.io/treinamentos-app/" target="_blank" class="btn-link"><i class="fa-solid fa-book"></i> Treinamento App</a>
+                                    <a href="https://produto-contele.github.io/questionario-app/" target="_blank" class="btn-link btn-link-alt"><i class="fa-solid fa-pen-to-square"></i> Questionário</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="detail-visual-col">
+                    <i class="fa-solid fa-laptop" style="color: var(--sem1-color);"></i>
+                    <h3 style="color: var(--sem1-color);">Base Operacional</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-3">
+            <img src="https://i.ibb.co/YFRS0XGF/oie-transparent.png" alt="Contele" class="logo-mini">
+            <h2>⚙️ Fase 2: Domínio do Produto</h2>
+            <div class="detail-grid">
+                <div class="detail-card detail-card-updated" style="border-left: 6px solid var(--sem2-color);">
+                    <h3 style="color: var(--sem2-color);">Ecossistema e Mercado</h3>
+                    <p>Entre o 5º e 6º dia, o foco é mergulhar profundamente no produto, nas suas integrações e entender as objeções comuns.</p>
+                    <ul class="feature-cards-list">
+                        <li>
+                            <div class="feature-icon-wrapper" style="color: var(--sem2-color);">
+                                <i class="fa-solid fa-puzzle-piece"></i>
+                            </div>
+                            <div class="feature-text-wrapper">
+                                <strong>Produto e Integrações (Até 5º Dia)</strong>
+                                <span>Treinamento profundo de Produto, API e Automações.</span>
+                                <a href="https://drive.google.com/file/d/1qrqI0_lEJ6iRqeNjWue-g55yeDMg_g_h/view" target="_blank" class="btn-link"><i class="fa-solid fa-video"></i> Assistir Treinamento</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-icon-wrapper" style="color: var(--sem2-color);">
+                                <i class="fa-solid fa-comments-dollar"></i>
+                            </div>
+                            <div class="feature-text-wrapper">
+                                <strong>Concorrência e Objeções (Até 5º Dia)</strong>
+                                <span>Vídeo base de conhecimento sobre a nossa concorrência.</span>
+                                <div style="display:flex; gap:10px; flex-wrap: wrap;">
+                                    <a href="https://drive.google.com/file/d/1sC49IwaFHmdm66i6ZOt4OExx5KWZH7ug/view" target="_blank" class="btn-link"><i class="fa-solid fa-video"></i> Assistir Treinamento</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-icon-wrapper" style="color: var(--sem2-color);">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div class="feature-text-wrapper">
+                                <strong>Oráculo Teams</strong>
+                                <span>Consulte e prepare-se para contornar desafios comerciais utilizando a IA.</span>
+                                <a href="https://notebooklm.google.com/notebook/d37fc696-f3ce-4661-995f-d5cb607082c2" target="_blank" class="btn-link btn-link-alt"><i class="fa-solid fa-robot"></i> Acessar Oráculo Teams</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-icon-wrapper" style="color: var(--sem2-color);">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <div class="feature-text-wrapper">
+                                <strong>Treinamento Avançado (Até 6º Dia)</strong>
+                                <span>Técnicas avançadas de uso e gestão no Contele Teams.</span>
+                                <a href="https://produto-contele.github.io/treinamento-avancado/" target="_blank" class="btn-link"><i class="fa-solid fa-rocket"></i> Acessar Módulo Avançado</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="detail-visual-col">
+                    <i class="fa-solid fa-brain" style="color: var(--sem2-color);"></i>
+                    <h3>Inteligência de Vendas</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide-4">
+            <img src="https://i.ibb.co/YFRS0XGF/oie-transparent.png" alt="Contele" class="logo-mini">
+            <h2>🤝 Fase 3: Prática e Sombreamento</h2>
+            <div class="detail-grid">
+                <div class="detail-card detail-card-updated" style="border-left: 6px solid var(--sem3-color);">
+                    <h3 style="color: var(--sem3-color);">Experiência do Cliente</h3>
+                    <p>Do 7º ao 10º dia, participe ativamente de simulações e obtenha acesso oficial às ferramentas de teste.</p>
+                    <ul class="feature-cards-list">
+                        <li>
+                            <div class="feature-icon-wrapper" style="color: var(--sem3-color);">
+                                <i class="fa-solid fa-key"></i>
+                            </div>
+                            <div class="feature-text-wrapper">
+                                <strong>Ambiente de Testes (Contele Teams)</strong>
+                                <span>Credenciais para acesso à conta de treinamento:</span>
+                                <div class="login-box">
+                                    <div><strong>Acesso:</strong> <a href="https://app.contelege.com.br/" target="_blank">app.contelege.com.br</a></div>
+                                    <div><strong>Login:</strong> treinamento.produto@contele.com.br</div>
+                                    <div><strong>Senha:</strong> @Produto.Testes</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-icon-wrapper" style="color: var(--sem3-color);">
+                                <i class="fa-solid fa-people-group"></i>
+                            </div>
+                            <div class="feature-text-wrapper">
+                                <strong>Prática em Reuniões (Até 10º Dia)</strong>
+                                <span>Participação em no mínimo 3 reuniões acompanhadas. <em>(Enviar links probatórios para a liderança)</em></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-icon-wrapper" style="color: var(--sem3-color);">
+                                <i class="fa-solid fa-link"></i>
+                            </div>
+                            <div class="feature-text-wrapper">
+                                <strong>Apresentação do LinkTree (Até 10º Dia)</strong>
+                                <span>Central de links e acessos rápidos para a operação.</span>
+                                <a href="https://produto-contele.github.io/linktree/" target="_blank" class="btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Acessar LinkTree</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="detail-visual-col">
+                    <i class="fa-solid fa-user-tie" style="color: var(--sem3-color);"></i>
+                    <h3>Vivência Consultiva</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-no-scroll" id="slide-5">
+            <img src="https://i.ibb.co/YFRS0XGF/oie-transparent.png" alt="Contele" class="logo-mini">
+            <h2 style="margin-bottom: 5px;">📝 Fase 4: Avaliações Oficiais</h2>
+            
+            <div class="eval-container">
+                <div class="eval-header">
+                    <div>
+                        <h3>Gabarito de Avaliações</h3>
+                        <p>Analise as simulações e os feedbacks aplicados em cada caso prático.</p>
+                    </div>
+                    <div class="eval-alert">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Critério de Aprovação: Notas > 7.0
+                    </div>
+                </div>
+
+                <div class="video-grid">
+                    <div class="video-card">
+                        <h4>Simulação: Avaliação Natália (CS 1)</h4>
+                        <div class="video-iframe-container">
+                            <iframe src="https://drive.google.com/file/d/19nLnVHubsUS1SFMnpNx2Q_8kzJqk-hB5/preview" allow="autoplay"></iframe>
+                        </div>
+                        <div class="video-footer">
+                            <span style="font-size: 14px; color: var(--text-gray); font-weight: 600;">Prazo de Conclusão: Até o 12º Dia</span>
+                            <a href="https://produto-contele.github.io/feedback-cs-1/" target="_blank" class="btn-link btn-feedback"><i class="fa-solid fa-comment-dots"></i> Ver Feedback CS 1</a>
+                        </div>
+                    </div>
+
+                    <div class="video-card">
+                        <h4>Simulação: Avaliação Vanessa (CS 2)</h4>
+                        <div class="video-iframe-container">
+                            <iframe src="https://drive.google.com/file/d/1qQmyzT2F1gNnCT-oP4vmrMiRHh7VcMCx/preview" allow="autoplay"></iframe>
+                        </div>
+                        <div class="video-footer">
+                            <span style="font-size: 14px; color: var(--text-gray); font-weight: 600;">Prazo de Conclusão: Até o 15º Dia</span>
+                            <a href="https://produto-contele.github.io/feedback-cs-2/" target="_blank" class="btn-link btn-feedback"><i class="fa-solid fa-comment-dots"></i> Ver Feedback CS 2</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" id="prevBtn" onclick="prevSlide()" disabled><i class="fa-solid fa-arrow-left"></i> Anterior</button>
+            <button class="control-btn" id="nextBtn" onclick="nextSlide()">Próximo <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+
+    </div>
+
+    <div id="sidebar">
+        <div class="sidebar-title">Menu de Onboarding</div>
+        <ul class="index-list">
+            <li class="index-item active-nav" onclick="goToSlide(0)"><i class="fa-solid fa-house"></i> Início</li>
+            <li class="index-item" onclick="goToSlide(1)"><i class="fa-solid fa-list-check"></i> Cronologia</li>
+            
+            <div class="index-group">Etapas do Treinamento</div>
+            <li class="index-item sub-item" onclick="goToSlide(2)"><i class="fa-solid fa-desktop" style="color:#10B981"></i> Fase 1: Web & App</li>
+            <li class="index-item sub-item" onclick="goToSlide(3)"><i class="fa-solid fa-brain" style="color:#F59E0B"></i> Fase 2: Produto</li>
+            <li class="index-item sub-item" onclick="goToSlide(4)"><i class="fa-solid fa-user-tie" style="color:#3B82F6"></i> Fase 3: Prática CS</li>
+            <li class="index-item sub-item" onclick="goToSlide(5)"><i class="fa-solid fa-clipboard-check" style="color:#EF4444"></i> Fase 4: Avaliações</li>
+        </ul>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const totalSlides = slides.length;
+
+        function updateUI() {
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+            
+            slides.forEach((slide, index) => {
+                if (index === currentSlide) { slide.classList.add('active'); }
+                else { slide.classList.remove('active'); }
+            });
+
+            const allListItems = document.querySelectorAll('.index-item');
+            allListItems.forEach((li) => { li.classList.remove('active-nav'); });
+            
+            if(allListItems[currentSlide]) {
+                allListItems[currentSlide].classList.add('active-nav');
+                if(currentSlide !== totalSlides - 1) {
+                   allListItems[currentSlide].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
+        }
+
+        function nextSlide() { if (currentSlide < totalSlides - 1) { currentSlide++; updateUI(); } }
+        function prevSlide() { if (currentSlide > 0) { currentSlide--; updateUI(); } }
+        function goToSlide(index) { if (index >= 0 && index < totalSlides) { currentSlide = index; updateUI(); } }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') nextSlide();
+            else if (event.key === 'ArrowLeft') prevSlide();
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>
